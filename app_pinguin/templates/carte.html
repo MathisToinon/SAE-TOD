@@ -4,7 +4,47 @@
 {% block title %}Accueil{% endblock %}
 
 {% block content %}
-    <h1>Bienvenue sur la page carte</h1>
-    <p>Ceci est du contenu dynamique pour la page d'accueil.</p>
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <div class="container-fluid p-4">
+        <div class="card border-0 shadow-sm mt-4 mb-5">
+          <div class="card-body">
+            <h1>Bienvenue sur la page carte</h1>
+            <p class="card-text">Ceci est du contenu dynamique pour la page d'accueil.</p>
+          </div>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div id="map" style="height: 450px; width: 100%; border-radius: 12px;"></div>
+        </div>
+        <script>
+  // Initialiser la carte centrée sur la France
+  var map = L.map('map').setView([46.6, 2.5], 6); // lat, long, zoom
+
+  // Ajouter les tuiles OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Exemple de points de livraison avec consommation énergétique
+  var pointsLivraison = [
+    { lat: 48.8566, lon: 2.3522, name: "Paris", consommation: 1200 },
+    { lat: 45.7640, lon: 4.8357, name: "Lyon", consommation: 950 },
+    { lat: 43.6047, lon: 1.4442, name: "Toulouse", consommation: 800 },
+    { lat: 47.2184, lon: -1.5536, name: "Nantes", consommation: 700 }
+  ];
+
+  // Ajouter un marker pour chaque point avec une popup
+  pointsLivraison.forEach(function(point) {
+    L.marker([point.lat, point.lon])
+      .addTo(map)
+      .bindPopup(`<strong>${point.name}</strong><br>Consommation : ${point.consommation} MWh`);
+  });
+</script>
+
+    </div>
     <!-- Ajoute ici tout ce que tu veux afficher -->
 {% endblock %}

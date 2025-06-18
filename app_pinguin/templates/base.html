@@ -72,9 +72,14 @@
                 <div><input type="radio" id="year2022" name="year" value="2022"><label for="year2022">2022</label></div>
                 <div><input type="radio" id="year2023" name="year" value="2023"><label for="year2023">2023</label></div>
                 <div><input type="radio" id="year2024" name="year" value="2024"><label for="year2024">2024</label></div>
+                <p>Type d'énergie</p>
+                <div><input type="radio" id="electricity" name="energy" value="electricity"><label for="electricity">Electricité</label></div>
+                <div><input type="radio" id="gaz" name="energy" value="gaz"><label for="electricity">Gaz</label></div>
+                <div><input type="radio" id="chaleurFroid" name="energy" value="chaleurFroid"><label for="chaleurFroid">Chaleur et Froid</label></div>
+                <p>Secteur</p>
             </form>
             {% endif %}
-            <div class="d-flex flex-column col-10 overflow-hidden h-100 px-3" style="box-sizing: border-box;">
+            <div class="d-flex flex-column col-10 overflow-auto h-100 px-3" style="box-sizing: border-box; overflow-y: auto;">
                 {% block content %}{% endblock %}
             </div>
         </div>

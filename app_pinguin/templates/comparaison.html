@@ -4,7 +4,130 @@
 {% block title %}Accueil{% endblock %}
 
 {% block content %}
-    <h1>Bienvenue sur la page comparaison</h1>
-    <p>Ceci est du contenu dynamique pour la page d'accueil.</p>
+        <div class="container-fluid p-4">
+            <div class="card border-0 shadow-sm mt-4 mb-5">
+              <div class="card-body">
+                <h1>Bienvenue sur la page comparaison</h1>
+                <p class="card-text">Ceci est du contenu dynamique pour la page d'accueil.</p>
+              </div>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-12 col-md-6 col-lg-5">
+                  <div class="card border-0 shadow-sm mb-4" style="height: 500px;">
+                    <div class="card-header bg-primary text-white">
+                      <h5 class="mb-0">Répartition des consommations par secteur</h5>
+                    </div>
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                      <canvas id="pieChart" style="max-width: 100%; max-height: 100%;"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-8 col-lg-7">
+                  <div class="card border-0 shadow-sm mb-4" style="height: 500px; margin: auto;">
+                    <div class="card-header bg-primary text-white">
+                      <h5 class="mb-0">Consommation énergétique par secteur et par année (MWh)</h5>
+                    </div>
+                    <div class="card-body">
+                      <canvas id="stackedYearChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
+                const stackedYearCtx = document.getElementById('stackedYearChart').getContext('2d');
+
+const stackedYearChart = new Chart(stackedYearCtx, {
+  type: 'bar',
+  data: {
+    labels: ['2021', '2022', '2023', '2024', '2025'],  // années
+    datasets: [
+      {
+        label: 'Industrie',
+        data: [500, 520, 510, 530, 540],
+        backgroundColor: '#E6AE12'
+      },
+      {
+        label: 'Résidentiel',
+        data: [400, 390, 420, 410, 405],
+        backgroundColor: '#2F4F4F'
+      },
+      {
+        label: 'Tertiaire',
+        data: [300, 310, 305, 320, 330],
+        backgroundColor: '#4682B4'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: { boxWidth: 20, padding: 15 }
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+        callbacks: {
+          label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y} MWh`
+        }
+      }
+    },
+    scales: {
+      x: {
+        stacked: true,
+        title: { display: true, text: 'Année' }
+      },
+      y: {
+        stacked: true,
+        beginAtZero: true,
+        title: { display: true, text: 'Consommation (MWh)' }
+      }
+    }
+  }
+});
+
+                const pieCtx = document.getElementById('pieChart').getContext('2d');
+
+const pieChart = new Chart(pieCtx, {
+  type: 'pie',
+  data: {
+    labels: ['Industrie', 'Résidentiel', 'Tertiaire'],
+    datasets: [{
+      label: 'Consommation (MWh)',
+      data: [600, 700, 550],  // Valeurs en dur, à remplacer par ta BDD
+      backgroundColor: [
+        '#E6AE12', // jaune
+        '#2F4F4F', // gris foncé
+        '#4682B4'  // bleu steel
+      ],
+      borderColor: '#fff',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          boxWidth: 20,
+          padding: 15
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.label}: ${context.parsed} MWh`
+        }
+      }
+    }
+  }
+});
+
+            </script>
+        </div>
     <!-- Ajoute ici tout ce que tu veux afficher -->
 {% endblock %}
