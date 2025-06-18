@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 - Page Introuvable</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f7f5e6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #E6AE12;
+      text-align: center;
+      padding: 20px;
+    }
+    .container-404 {
+      max-width: 500px;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .penguin {
+      width: 150px;
+      margin-bottom: 20px;
+      animation: wobble 2s infinite;
+    }
+    @keyframes wobble {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      75% { transform: rotate(-5deg); }
+    }
+    a.btn-primary {
+      background-color: #E6AE12;
+      border-color: #E6AE12;
+    }
+    a.btn-primary:hover {
+      background-color: #E6AE12;
+      border-color: #E6AE12;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-404">
+    <h1>Oups... Page perdue dans la banquise ! 🐧</h1>
+    <p>
+      Cette page semble s'être échappée vers des eaux plus froides. <br />
+      Ne t'inquiète pas, notre pingouin la cherche déjà !
+    </p>
+    <a href="{% url 'index' %}" class="btn btn-primary mt-3">Retour vers des eaux plus sûr</a>
+  </div>
+</body>
+</html>
