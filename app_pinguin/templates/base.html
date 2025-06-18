@@ -31,7 +31,27 @@
     .dropdown-toggle::after {
         display: none;
     }
+    .btn-primary {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+    .text-color {
+        color: var(--primary-color) !important;
+    }
+    .form-check-input:checked {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    .form-check-input:hover {
+        cursor: pointer;
+        box-shadow: 0 0 0 0.1rem var(--primary-color) !important;
+    }
+    .form-check-input:focus {
+        box-shadow: 0 0 0 0.2rem rgba(var(--primary-color), 0.5); /* plus doux */
+        border-color: var(--primary-color);
+    }
     </style>
+
 </head>
 <body>
 <div class="d-flex flex-column" style="background-color: #F2F2F7; height: 100vh;">
@@ -65,24 +85,62 @@
         {% endif %}
     </div>
     <div class="row h-100 gx-0" style="height: calc(100vh - 60px); overflow: hidden; width: 100vw;">
-        <div class="row h-100 gx-0">
             {% if user.is_authenticated %}
-            <form class="col-2 bg-white h-100">
-                <p>Année :</p>
-                <div><input type="radio" id="year2022" name="year" value="2022"><label for="year2022">2022</label></div>
-                <div><input type="radio" id="year2023" name="year" value="2023"><label for="year2023">2023</label></div>
-                <div><input type="radio" id="year2024" name="year" value="2024"><label for="year2024">2024</label></div>
-                <p>Type d'énergie</p>
-                <div><input type="radio" id="electricity" name="energy" value="electricity"><label for="electricity">Electricité</label></div>
-                <div><input type="radio" id="gaz" name="energy" value="gaz"><label for="electricity">Gaz</label></div>
-                <div><input type="radio" id="chaleurFroid" name="energy" value="chaleurFroid"><label for="chaleurFroid">Chaleur et Froid</label></div>
-                <p>Secteur</p>
+            <form class="col-2 bg-white h-100 p-3 border-end d-flex flex-column">
+                <div class="mb-4 mt-5">
+                    <h6 class="text-uppercase fw-bold text-color">Année</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="year2022" name="year" value="2022">
+                        <label class="form-check-label" for="year2022">2022</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="year2023" name="year" value="2023">
+                        <label class="form-check-label" for="year2023">2023</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="year2024" name="year" value="2024">
+                        <label class="form-check-label" for="year2024">2024</label>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="text-uppercase fw-bold text-color">Types d'énergie</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="electricity" name="energy" value="electricity">
+                        <label class="form-check-label" for="electricity">Électricité</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gaz" name="energy" value="gaz">
+                        <label class="form-check-label" for="gaz">Gaz</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="chaleurFroid" name="energy" value="chaleurFroid">
+                        <label class="form-check-label" for="chaleurFroid">Chaleur et Froid</label>
+                    </div>
+                </div>
+
+                <div class="mb-4 mb-5">
+                    <h6 class="text-uppercase fw-bold text-color">Secteurs</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="industrie" name="sector" value="industrie">
+                        <label class="form-check-label" for="industrie">Industrie</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="residentiel" name="sector" value="residentiel">
+                        <label class="form-check-label" for="residentiel">Résidentiel</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tertiaire" name="sector" value="tertiaire">
+                        <label class="form-check-label" for="tertiaire">Tertiaire</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Filtrer</button>
             </form>
+
             {% endif %}
             <div class="d-flex flex-column col-10 overflow-auto h-100 px-3" style="box-sizing: border-box; overflow-y: auto;">
                 {% block content %}{% endblock %}
             </div>
-        </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

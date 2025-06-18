@@ -27,6 +27,10 @@ def secteur(request):
 def carte(request):
     return render(request, "carte.html")
 
+@login_required
+def erreur404(request):
+    return render(request, "erreur404.html")
+
 
 def signup_view(request):
     if request.method == "POST":
