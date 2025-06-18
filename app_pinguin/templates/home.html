@@ -1,0 +1,68 @@
+<!-- appWeb/templates/appWeb/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+    <!-- Ajoute ici tout ce que tu veux afficher -->
+    <div class="container-fluid p-4">
+        <div class="card border-0 shadow-sm mt-4 mb-5">
+          <div class="card-body">
+            <h1 class="card-title">Bienvenue sur la page d'accueil</h1>
+            <p class="card-text">Ceci est du contenu dynamique pour la page d'accueil.</p>
+          </div>
+        </div>
+      <div class="row mb-4 g-4">
+        <div class="col-md-6">
+          <div class="rounded p-5 text-white d-flex" style="background-color: #2ECC71;">
+              <div class="col-5">
+                  <i class="fas fa-chart-line" style="font-size: 5.5rem;"></i>
+              </div>
+              <div class="col-7">
+                  <h2 class="h1 text-end">+ 20%</h2>
+                  <h2 class="h6 text-end">Taux de variation annuel global</h2>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="rounded p-5 text-white d-flex" style="background-color: #9B59B6;">
+              <div class="col-5">
+                  <i class="fa-solid fa-gauge-high" style="font-size: 5.5rem;"></i>
+              </div>
+              <div class="col-7">
+                  <h2 class="h1 text-end">1000 MWh</h2>
+                  <h2 class="h6 text-end">Moyenne de consommation par point de livraison</h2>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4 g-4">
+        <div class="col-md-6">
+          <div class="rounded p-5 text-white d-flex" style="background-color: #3498DB;">
+              <div class="col-5">
+                  <i class="fa-solid fa-location-dot" style="font-size: 5.5rem;"></i>
+              </div>
+              <div class="col-7">
+                  <h2 class="h1 text-end">12243</h2>
+                  <h2 class="h6 text-end">Nombre total de point de livraison</h2>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="rounded p-5 text-white d-flex" style="background-color: #E67E22;">
+              <div class="col-5">
+                  <i class="fa-solid fa-plug-circle-bolt" style="font-size: 5.5rem;"></i>
+              </div>
+              <div class="col-7">
+                  <h2 class="h1 text-end">1353 MWh</h2>
+                  <h2 class="h6 text-end">Consommation total d'énergie</h2>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+{% endblock %}

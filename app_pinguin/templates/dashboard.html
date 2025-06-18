@@ -1,0 +1,261 @@
+<!-- appWeb/templates/appWeb/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-4">
+        <div class="card border-0 shadow-sm mt-4 mb-5">
+          <div class="card-body">
+            <h1 class="card-title">Bienvenue sur la page Dashboard</h1>
+            <p class="card-text">Ceci est du contenu dynamique pour la page dashboard.</p>
+          </div>
+        </div>
+        <!-- Canvas pour le graphique -->
+        <div class="container my-4">
+          <div class="row g-4 justify-content-center">
+              <div class="col-12 col-md-6 col-lg-5">
+                  <div class="card border-0 shadow-sm mb-4 h-100" style="height: 500px;">
+                    <div class="card-header bg-primary text-white">
+                      <h5 class="mb-0">Consommation énergétique par année (MWh)</h5>
+                    </div>
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                      <canvas id="energyChart" style="max-width: 100%; max-height: 100%;"></canvas>
+                    </div>
+                  </div>
+                </div>
+              <div class="col-12 col-md-6 col-lg-5">
+                  <div class="card border-0 shadow-sm mb-4 h-100" style="height: 500px;">
+                    <div class="card-header bg-primary text-white">
+                      <h5 class="mb-0">Consommation énergétique empilée par filière (MWh)</h5>
+                    </div>
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                      <canvas id="stackedBarChart" style="max-width: 100%; max-height: 100%;"></canvas>
+                    </div>
+                  </div>
+                </div>
+              <div class="col-12 col-md-6 col-lg-5">
+                  <div class="card border-0 shadow-sm mb-4" style="height: 500px;">
+                    <div class="card-header bg-primary text-white">
+                      <h5 class="mb-0">Répartition par secteur (%)</h5>
+                    </div>
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                      <canvas id="radarChart" style="max-width: 100%; max-height: 100%;"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+
+          </div>
+        </div>
+
+
+<!-- Charger Chart.js depuis CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const energyCtx = document.getElementById('energyChart').getContext('2d');
+
+const data = {
+  labels: ['2021', '2022', '2023', '2024', '2025'], // Années en abscisse
+  datasets: [
+    {
+      label: 'Gaz',
+      data: [1200, 1150, 1100, 1050, 1000], // consommation en MWh
+      borderColor: 'rgba(255, 99, 132, 1)', // rouge
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      fill: false,
+      tension: 0.3,
+      pointStyle: 'circle',
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      borderWidth: 2,
+    },
+    {
+      label: "Électricité",
+      data: [900, 950, 1000, 1100, 1150],
+      borderColor: 'rgba(54, 162, 235, 1)', // bleu
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      fill: false,
+      tension: 0.3,
+      pointStyle: 'rectRot',
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      borderWidth: 2,
+    },
+    {
+      label: "Chaleur et Froid",
+      data: [700, 650, 600, 550, 500],
+      borderColor: 'rgba(255, 206, 86, 1)', // jaune
+      backgroundColor: 'rgba(255, 206, 86, 0.2)',
+      fill: false,
+      tension: 0.3,
+      pointStyle: 'triangle',
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      borderWidth: 2,
+    }
+  ]
+};
+
+const config = {
+  type: 'line',
+  data: data,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+      }
+    },
+    interaction: {
+      mode: 'nearest',
+      axis: 'x',
+      intersect: false
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Consommation (MWh)'
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Année'
+        }
+      }
+    }
+  },
+};
+
+const energyChart = new Chart(energyCtx, config);
+
+  const stackedCtx = document.getElementById('stackedBarChart').getContext('2d');
+
+  const stackedBarChart = new Chart(stackedCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Gaz', 'Électricité', 'Chaleur'], // types d'énergie
+      datasets: [
+        {
+          label: 'Industrie',
+          data: [300, 500, 200], // consommation MWh pour chaque énergie
+          backgroundColor: '#E6AE12'  // couleur jaune (ta couleur primaire)
+        },
+        {
+          label: 'Résidentiel',
+          data: [200, 400, 100],
+          backgroundColor: '#2F4F4F'  // gris foncé
+        },
+        {
+          label: 'Tertiaire',
+          data: [100, 300, 150],
+          backgroundColor: '#4682B4'  // bleu steel
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            boxWidth: 20,
+            padding: 15
+          }
+        },
+        title: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          title: {
+            display: true,
+            text: "Types d'énergie"
+          }
+        },
+        y: {
+          stacked: true,
+          title: {
+            display: true,
+            text: "Consommation (MWh)"
+          },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  const radarCtx = document.getElementById('radarChart').getContext('2d');
+
+const radarChart = new Chart(radarCtx, {
+  type: 'radar',
+  data: {
+    labels: ['Électricité', 'Gaz', 'Chaleur et Froid'],
+    datasets: [
+      {
+        label: 'Industrie',
+        data: [60, 70, 40], // en pourcentage
+        backgroundColor: 'rgba(230, 174, 18, 0.2)',
+        borderColor: '#E6AE12',
+        pointBackgroundColor: '#E6AE12'
+      },
+      {
+        label: 'Résidentiel',
+        data: [50, 40, 30],
+        backgroundColor: 'rgba(47, 79, 79, 0.2)',
+        borderColor: '#2F4F4F',
+        pointBackgroundColor: '#2F4F4F'
+      },
+      {
+        label: 'Tertiaire',
+        data: [30, 20, 50],
+        backgroundColor: 'rgba(70, 130, 180, 0.2)',
+        borderColor: '#4682B4',
+        pointBackgroundColor: '#4682B4'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      r: {
+        angleLines: { display: true },
+        suggestedMin: 0,
+        suggestedMax: 100,
+        ticks: {
+          stepSize: 20,
+          callback: (value) => value + '%'
+        },
+        pointLabels: {
+          font: {
+            size: 14
+          }
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.dataset.label}: ${context.formattedValue}%`
+        }
+      }
+    }
+  }
+});
+
+</script>
+</div>
+    <!-- Ajoute ici tout ce que tu veux afficher -->
+{% endblock %}
